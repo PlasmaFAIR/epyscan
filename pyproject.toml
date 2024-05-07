@@ -1,0 +1,38 @@
+[build-system]
+requires = [
+    "setuptools >= 65",
+    "setuptools_scm[toml] >= 6.2",
+    "wheel >= 0.29.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "epyscan"
+authors = [
+        {name = "Peter Hill", email = "peter.hill@york.ac.uk"}
+]
+license = {text = "BSD"}
+requires-python = ">=3.9"
+dynamic = ["version"]
+dependencies = [
+    "epydeck @ git+https://github.com/PlasmaFAIR/epydeck.git@main",
+]    
+
+[project.optional-dependencies]
+docs = [
+     "sphinx >= 5.3",
+     "sphinx_autodoc_typehints >= 1.19",
+     "sphinx-book-theme >= 0.4.0rc1",
+     "sphinx-argparse-cli >= 1.10.0",
+     "sphinx-inline-tabs",
+]
+tests = [
+      "pytest >= 3.3.0",
+]
+
+[tool.setuptools_scm]
+write_to = "src/epyscan/_version.py"
+
+[tool.ruff]
+line-length = 88
+lint.ignore = ["E501"]
