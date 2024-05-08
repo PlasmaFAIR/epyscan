@@ -1,7 +1,9 @@
 import epydeck
 
+from copy import deepcopy
 from pathlib import Path
 import numpy as np
+from scipy.stats import qmc
 
 from typing import Union
 
@@ -152,8 +154,37 @@ class GridScan:
     def __next__(self):
         return next(self._sample_iter)
 
-    def sample(self, num: int = 1):
-        if num == 1:
-            return next(self)
-
+    def sample(self, num: int = 1) -> list[dict]:
         return [sample for (sample, _) in zip(self, range(num))]
+
+
+class LatinHypercubeSampler:
+    def __init__(self, parameters: dict):
+        self._parameters = deepcopy(parameters)
+        for key, value in self._parameters.items():
+            if value.get("log", False):
+                self._parameters[key] = {
+                    "min": np.log(value["min"]),
+                    "max": np.log(value["max"]),
+                    "log": True,
+                }
+
+        self._sampler = qmc.LatinHypercube(d=len(parameters.keys()))
+
+        self._l_bounds = [param["min"] for param in self._parameters.values()]
+        self._u_bounds = [param["max"] for param in self._parameters.values()]
+
+    def __next__(self):
+        return self.sample()[0]
+
+    def sample(self, num: int = 1):
+        samples = self._sampler.random(num)
+        scaled = qmc.scale(samples, self._l_bounds, self._u_bounds)
+
+        results = [dict(zip(self._parameters.keys(), sample)) for sample in scaled]
+        for result in results:
+            for key, value in result.items():
+                if self._parameters[key].get("log", False):
+                    result[key] = np.exp(value)
+
+        return results
