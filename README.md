@@ -37,7 +37,7 @@ template = {"block": {"var3": 1.23}, "other_block": {"var4": True}}
 grid_scan = epyscan.GridScan(parameters, n_samples=4)
 
 # Location of folder to save simulations to
-run_root = Path("example_campaign")
+run_root = pathlib.Path("example_campaign")
 
 # Takes in the folder and template and starts a counter so each new simulation gets saved to a new folder
 campaign = epyscan.Campaign(template, run_root)
