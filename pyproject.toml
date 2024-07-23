@@ -16,6 +16,8 @@ requires-python = ">=3.9"
 dynamic = ["version"]
 dependencies = [
     "epydeck @ git+https://github.com/PlasmaFAIR/epydeck.git@main",
+    "numpy >= 1.24",
+    "scipy >= 1.10",
 ]    
 
 [project.optional-dependencies]
