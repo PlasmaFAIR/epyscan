@@ -9,7 +9,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "epyscan"
 authors = [
-        {name = "Peter Hill", email = "peter.hill@york.ac.uk"}
+        {name = "Peter Hill", email = "peter.hill@york.ac.uk"},
+        {name = "Joel Adams", email = "joel.adams@york.ac.uk"}
 ]
 license = {text = "BSD"}
 requires-python = ">=3.9"
