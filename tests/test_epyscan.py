@@ -1,7 +1,5 @@
-import epyscan
 import epydeck
-
-import numpy as np
+import epyscan
 
 
 def test_make_run_dirs(tmp_path):
@@ -107,7 +105,7 @@ def test_campaign(tmp_path):
         "other_block": {"var4": True},
     }
 
-    with open(base_path / "run_4" / "input.deck") as f:
+    with (base_path / "run_4" / "input.deck").open() as f:
         actual_case_deck = epydeck.load(f)
 
     assert actual_case_deck == expected_case_deck

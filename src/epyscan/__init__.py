@@ -83,7 +83,7 @@ class Campaign:
         full_sample = epydeck.deep_update(self.template, expanded_sample_dict)
         path = rundir_hierarchy(self.root, self._counter)
 
-        with open(path / "input.deck", "w") as f:
+        with (path / "input.deck").open("w") as f:
             epydeck.dump(full_sample, f)
 
         self._counter += 1
