@@ -1,7 +1,5 @@
-import epyscan
 import epydeck
-
-import numpy as np
+import epyscan
 
 
 def test_make_run_dirs(tmp_path):
@@ -9,6 +7,7 @@ def test_make_run_dirs(tmp_path):
 
     expected_path = tmp_path / "run_0_1000000/run_0_10000/run_1200_1300/run_1234"
 
+    assert path == expected_path
     assert expected_path.is_dir()
     assert expected_path.exists()
 
@@ -106,7 +105,7 @@ def test_campaign(tmp_path):
         "other_block": {"var4": True},
     }
 
-    with open(base_path / "run_4" / "input.in") as f:
+    with (base_path / "run_4" / "input.deck").open() as f:
         actual_case_deck = epydeck.load(f)
 
     assert actual_case_deck == expected_case_deck
