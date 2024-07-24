@@ -9,6 +9,7 @@ def test_make_run_dirs(tmp_path):
 
     expected_path = tmp_path / "run_0_1000000/run_0_10000/run_1200_1300/run_1234"
 
+    assert path == expected_path
     assert expected_path.is_dir()
     assert expected_path.exists()
 
