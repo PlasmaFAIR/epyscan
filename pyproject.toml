@@ -32,6 +32,7 @@ docs = [
 tests = [
       "pytest >= 3.3.0",
 ]
+lint = ["ruff"]
 
 [tool.setuptools_scm]
 write_to = "src/epyscan/_version.py"
