@@ -106,7 +106,7 @@ def test_campaign(tmp_path):
         "other_block": {"var4": True},
     }
 
-    with open(base_path / "run_4" / "input.in") as f:
+    with open(base_path / "run_4" / "input.deck") as f:
         actual_case_deck = epydeck.load(f)
 
     assert actual_case_deck == expected_case_deck
