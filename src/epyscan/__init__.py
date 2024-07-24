@@ -1,11 +1,10 @@
-import epydeck
-
 from copy import deepcopy
 from pathlib import Path
+from typing import Union
+
+import epydeck
 import numpy as np
 from scipy.stats import qmc
-
-from typing import Union
 
 
 def rundir_hierarchy(root: Path, run_num: int) -> Path:
