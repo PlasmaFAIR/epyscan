@@ -51,8 +51,8 @@ with open("paths.txt", "w") as f:
   [f.write(str(path) + "\n") for path in paths]
 
 # Opening paths.txt
-# /users/bmp535/scratch/paper/1d_intens_vs_nel_v3_test/run_0_1000000/run_0_10000/run_0_100/run_0
-# /users/bmp535/scratch/paper/1d_intens_vs_nel_v3_test/run_0_1000000/run_0_10000/run_0_100/run_1
-# /users/bmp535/scratch/paper/1d_intens_vs_nel_v3_test/run_0_1000000/run_0_10000/run_0_100/run_2
-# /users/bmp535/scratch/paper/1d_intens_vs_nel_v3_test/run_0_1000000/run_0_10000/run_0_100/run_3
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_0
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_1
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_2
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_3
 ```
