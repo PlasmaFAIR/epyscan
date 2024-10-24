@@ -1,5 +1,4 @@
-epyscan
-=======
+# epyscan
 
 Create campaigns of EPOCH runs over a given parameter space using
 different sampling methods
@@ -7,8 +6,7 @@ different sampling methods
 This is a work in progress, with only uniform grid scans implemented
 so far.
 
-Examples
---------
+## Examples
 
 Parameter space to be sampled is described by a `dict` where keys
 should be in the form of `block_name:parameter`, and values should
@@ -19,44 +17,47 @@ be dicts with the following keys:
 - `"log"`: (optional) `bool`, if `True` then grid is done in
   log space for this parameter
 
-
 ```python
-import epyscan
 import pathlib
+import epyscan
+import epydeck
 
-# Description of parameter space
+# Define the parameter space to be sampled. Here, we are varying the intensity
+# and density
 parameters = {
-    "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True},
-    "block:var2": {"min": 2.0, "max": 5.0},
+  # Intensity varies logarithmically between 1.0e22 and 1.0e24
+  "constant:intens": {"min": 1.0e22, "max": 1.0e24, "log": True},
+  # Density varies logarithmically between 1.0e20 and 1.0e24
+  "constant:nel": {"min": 1.0e20, "max": 1e24, "log": True},
 }
 
-# Template of deck file
-template = {"block": {"var3": 1.23}, "other_block": {"var4": True}}
+# Load a deck file to use as a template for the simulations
+with open("template_deck_filename") as f:
+  deck = epydeck.load(f)
 
-# Sets up iterator for specific parameters and specifies number of samples to split data across
+# Create a grid scan object that will generate 4 different sets of parameters 
+# within the specified ranges
 grid_scan = epyscan.GridScan(parameters, n_samples=4)
 
-# Location of folder to save simulations to
+# Define the root directory where the simulation folders will be saved. 
+# This directory will be created if it doesn't exist
 run_root = pathlib.Path("example_campaign")
 
-# Takes in the folder and template and starts a counter so each new simulation gets saved to a new folder
-campaign = epyscan.Campaign(template, run_root)
+# Initialize a campaign object with the template deck and the root directory. 
+# This will manage the creation of simulation cases
+campaign = epyscan.Campaign(deck, run_root)
 
-# Create the folders and deck files
+# Generate the folders and deck files for each set of parameters in the
+# grid scan
 paths = [campaign.setup_case(sample) for sample in grid_scan]
 
-# Prints the output of the last created deck file
-with open(paths[-1] / "input.deck") as f:
-    print(f.read())
+# Save the paths of the generated simulation folders to a file
+with open("paths.txt", "w") as f:
+  [f.write(f"{path}\n") for path in paths]
 
-# begin:block
-#   var3 = 1.23
-#   var1 = 100.0
-#   var2 = 2.0
-# end:block
-#
-# begin:other_block
-#   var4 = T
-# end:other_block
-
+# Opening paths.txt
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_0
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_1
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_2
+# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_3
 ```
