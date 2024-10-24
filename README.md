@@ -18,7 +18,6 @@ be dicts with the following keys:
   log space for this parameter
 
 ```python
-```python
 import pathlib
 import epyscan
 import epydeck
