@@ -24,8 +24,10 @@ import epydeck
 
 # Define the parameter space to be sampled. Here, we are varying the intensity and density.
 parameters = {
-  "constant:intens": {"min": 1.0e22, "max": 1.0e24, "log": True},  # Intensity varies logarithmically between 1.0e22 and 1.0e24
-  "constant:nel": {"min": 1.0e20, "max": 1e24, "log": True},       # Density varies logarithmically between 1.0e20 and 1.0e24
+  # Intensity varies logarithmically between 1.0e22 and 1.0e24
+  "constant:intens": {"min": 1.0e22, "max": 1.0e24, "log": True},
+  # Density varies logarithmically between 1.0e20 and 1.0e24
+  "constant:nel": {"min": 1.0e20, "max": 1e24, "log": True},
 }
 
 # Load a deck file to use as a template for the simulations
