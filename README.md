@@ -48,7 +48,7 @@ paths = [campaign.setup_case(sample) for sample in grid_scan]
 
 # Save the paths of the generated simulation folders to a file
 with open("paths.txt", "w") as f:
-  [f.write(str(path) + "\n") for path in paths]
+  [f.write(f"{path}\n") for path in paths]
 
 # Opening paths.txt
 # example_campaign/run_0_1000000/run_0_10000/run_0_100/run_0
