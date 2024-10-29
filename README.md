@@ -1,12 +1,27 @@
 # epyscan
 
 Create campaigns of EPOCH runs over a given parameter space using
-different sampling methods
+various sampling methods
 
-This is a work in progress, with only uniform grid scans implemented
-so far.
+## Installation
 
-## Examples
+Install from PyPI with:
+
+```bash
+pip install epyscan
+```
+
+or from a local checkout:
+
+```bash
+git clone https://github.com/PlasmaFAIR/epyscan.git
+cd epyscan
+pip install .
+```
+
+We recommend switching to [uv](https://docs.astral.sh/uv/) to manage packages.
+
+## Usage
 
 Parameter space to be sampled is described by a `dict` where keys
 should be in the form of `block_name:parameter`, and values should
