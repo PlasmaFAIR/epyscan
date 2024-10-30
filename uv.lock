@@ -156,12 +156,16 @@ wheels = [
 
 [[package]]
 name = "epydeck"
-version = "0.1.dev22+g8dc91f8"
-source = { git = "https://github.com/PlasmaFAIR/epydeck.git?rev=main#8dc91f8fd8575fa71d715192c5a42d1dc1831a1d" }
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/fe/e9/095544f5fc21046c2a0985fc04ca1f33b5453c545f3f1c24573d1099260c/epydeck-1.0.0.tar.gz", hash = "sha256:8856510149ff1ed5ae87f32b35e576cdea8b980f6a4cf702be62c883d00b8f5c", size = 70819 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c7/88/5b82d32be9d885ed2b242a45e9bbb04cb6eb6378a1bf99339ef5b1f7cdcf/epydeck-1.0.0-py3-none-any.whl", hash = "sha256:839a17e2de6e1ec03823d792ed668c68b8585f38634d658648b0032f7449bd1f", size = 29332 },
+]
 
 [[package]]
 name = "epyscan"
-version = "0.1.dev24+g3d3f1a9.d20241029"
+version = "0.1.dev31+g4f47200.d20241030"
 source = { editable = "." }
 dependencies = [
     { name = "epydeck" },
@@ -186,7 +190,7 @@ tests = [
 
 [package.metadata]
 requires-dist = [
-    { name = "epydeck", git = "https://github.com/PlasmaFAIR/epydeck.git?rev=main" },
+    { name = "epydeck", specifier = ">=1.0.0" },
     { name = "numpy", specifier = ">=1.24" },
     { name = "pytest", marker = "extra == 'tests'", specifier = ">=3.3.0" },
     { name = "ruff", marker = "extra == 'lint'" },
