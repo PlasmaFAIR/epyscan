@@ -16,11 +16,7 @@ authors = [
   { name = "Joel Adams", email = "joel.adams@york.ac.uk" },
 ]
 requires-python = ">=3.9"
-dependencies = [
-  "epydeck @ git+https://github.com/PlasmaFAIR/epydeck.git@main",
-  "numpy >= 1.24",
-  "scipy >= 1.10",
-]
+dependencies = ["epydeck >= 1.0.0", "numpy >= 1.24", "scipy >= 1.10"]
 description = "Create campaigns of EPOCH plasma PIC code runs over a given parameter space using various sampling methods."
 
 [project.optional-dependencies]
@@ -67,3 +63,6 @@ ignore = [
   "PLR2004", # magic-comparison
   "B9",      # flake8-bugbear opinionated warnings
 ]
+
+[tool.uv]
+cache-keys = [{ file = "pyproject.toml" }, { git = true }]
