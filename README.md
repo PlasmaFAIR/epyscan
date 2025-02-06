@@ -1,7 +1,10 @@
 # epyscan
 
-Create campaigns of EPOCH runs over a given parameter space using
-various sampling methods
+![PyPI](https://img.shields.io/pypi/v/epyscan?color=blue)
+![Build/Publish](https://github.com/PlasmaFAIR/epyscan/actions/workflows/build_publish.yml/badge.svg)
+![Tests](https://github.com/PlasmaFAIR/epyscan/actions/workflows/tests.yml/badge.svg)
+
+Epyscan generates [EPOCH](https://epochpic.github.io/) campaigns over a parameter space using different sampling methods. Part of [BEAM](#broad-epoch-analysis-modules-beam) (Broad EPOCH Analysis Modules).
 
 ## Installation
 
@@ -74,5 +77,19 @@ with open("paths.txt", "w") as f:
 # example_campaign/run_0_1000000/run_0_10000/run_0_100/run_0
 # example_campaign/run_0_1000000/run_0_10000/run_0_100/run_1
 # example_campaign/run_0_1000000/run_0_10000/run_0_100/run_2
-# example_campaign/run_0_1000000/run_0_10000/run_0_100/run_3
+# ...
 ```
+
+## Citing
+
+If epyscan contributes to a project that leads to publication, please acknowledge this by citing epyscan. This can be done by clicking the "cite this repository" button located near the top right of this page.
+
+## Broad EPOCH Analysis Modules (BEAM)
+
+![BEAM logo](./BEAM.png)
+
+BEAM is structured as a set of independent yet complementary open-source tools designed for analysing [EPOCH](https://epochpic.github.io/) simulations where researchers can adopt only the components they need, without being constrained by a rigid framework. The packages are as follows:
+
+- [sdf-xarray](https://github.com/PlasmaFAIR/sdf-xarray): Reading and processing SDF files and converting them to [xarray](https://docs.xarray.dev/en/stable/).
+- [epydeck](https://github.com/PlasmaFAIR/epydeck): Input deck reader and writer.
+- [epyscan](https://github.com/PlasmaFAIR/epyscan): Create campaigns over a given parameter space using various sampling methods.
