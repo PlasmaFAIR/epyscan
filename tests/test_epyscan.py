@@ -1,6 +1,6 @@
 import epydeck
-
 import epyscan
+import numpy as np
 
 
 def test_make_run_dirs(tmp_path):
@@ -64,6 +64,36 @@ def test_gridscan():
     ]
 
     assert samples == expected
+
+
+def test_latin_hypercube():
+    parameters = {
+        "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True},
+        "block:var2": {"min": 2.0, "max": 5.0},
+    }
+
+    lhc = epyscan.LatinHypercubeSampler(parameters)
+    n_samples = 5
+    samples = lhc.sample(n_samples)
+
+    for k, v in parameters.items():
+        intervals = np.linspace(v["min"], v["max"], n_samples + 1)
+        if v.get("log", False):
+            intervals = np.logspace(
+                np.log10(v["min"]), np.log10(v["max"]), n_samples + 1
+            )
+        samples_for_k = np.array([sample[k] for sample in samples])
+        interval_counts = np.array(
+            [
+                np.sum(
+                    np.logical_and(
+                        samples_for_k >= intervals[i], samples_for_k < intervals[i + 1]
+                    )
+                )
+                for i in range(n_samples)
+            ]
+        )
+        assert np.all(interval_counts == 1)
 
 
 def test_campaign(tmp_path):
