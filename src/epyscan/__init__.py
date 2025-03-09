@@ -104,6 +104,14 @@ class GridScan:
         - `"max"`: maximum value of the parameter
         - `"log"`: (optional) `bool`, if `True` then grid is done in
           log space for this parameter
+        - `"n_samples"`: (optional) `int`, if included then this is the
+          number of values that will be sampled for this parameter.
+          Overrides the `n_samples` argument of the `GridScan` constructor.
+        - `"endpoint"`: (optional) `bool`, if `False` then the range of values
+          for this parameter excludes `parameters["block_name:parameter"]["max"]`.
+        - `"values"`: (optional) `ArrayLike`, if included then the other
+          keys are ignored and the parameter values are obtained directly
+          from `parameters["block_name:parameter"]["values"]`.
 
     n_samples:
         Number of samples in each dimension
@@ -111,28 +119,38 @@ class GridScan:
     Examples
     --------
     >>> parameters = {
-          "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True},
-          "block:var2": {"min": 2.0, "max": 5.0},
+          "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True, "n_samples": 2},
+          "block:var2": {"min": 2.0, "max": 6.0, "endpoint": False},
+          "block:var3": {"values": [-5, 15]},
         }
     >>> grid_scan = GridScan(parameters, n_samples=4)
     >>> next(grid_scan)
-    {'block:var1': 10.0, 'block:var2': 2.0}
+    {'block:var1': 10.0, 'block:var2': 2.0, 'block:var3': -5}
 
     """
 
     def __init__(self, parameters: dict, n_samples: int = 10):
-
-        def _gridspace(start, stop, num: int, log=False):
+        def _gridspace(start, stop, num: int, log: bool = False, endpoint: bool = True):
             """Generalisation over logspace/linspace"""
             if log:
-                return np.logspace(np.log10(start), np.log10(stop), num=num)
+                return np.logspace(
+                    np.log10(start), np.log10(stop), num=num, endpoint=endpoint
+                )
 
-            return np.linspace(start, stop, num=num)
+            return np.linspace(start, stop, num=num, endpoint=endpoint)
 
-        self.parameters = {
-            k: _gridspace(v["min"], v["max"], num=n_samples, log=v.get("log", False))
-            for k, v in parameters.items()
-        }
+        self.parameters = {}
+        for k, v in parameters.items():
+            if "values" in v:
+                self.parameters[k] = v["values"]
+            else:
+                self.parameters[k] = _gridspace(
+                    v["min"],
+                    v["max"],
+                    num=v.get("n_samples", n_samples),
+                    log=v.get("log", False),
+                    endpoint=v.get("endpoint", True),
+                )
 
         grids = np.meshgrid(*self.parameters.values(), indexing="ij")
 

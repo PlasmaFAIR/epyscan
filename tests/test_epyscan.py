@@ -1,5 +1,4 @@
 import epydeck
-
 import epyscan
 
 
@@ -37,30 +36,31 @@ def test_expand_flatdict():
 
 def test_gridscan():
     parameters = {
-        "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True},
-        "block:var2": {"min": 2.0, "max": 5.0},
+        "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True, "n_samples": 2},
+        "block:var2": {"min": 2.0, "max": 6.0, "endpoint": False},
+        "block:var3": {"values": [-5, 15]},
     }
 
     grid_scan = epyscan.GridScan(parameters, n_samples=4)
     samples = list(grid_scan)
 
     expected = [
-        {"block:var1": 1.0e1, "block:var2": 2.0},
-        {"block:var1": 1.0e1, "block:var2": 3.0},
-        {"block:var1": 1.0e1, "block:var2": 4.0},
-        {"block:var1": 1.0e1, "block:var2": 5.0},
-        {"block:var1": 1.0e2, "block:var2": 2.0},
-        {"block:var1": 1.0e2, "block:var2": 3.0},
-        {"block:var1": 1.0e2, "block:var2": 4.0},
-        {"block:var1": 1.0e2, "block:var2": 5.0},
-        {"block:var1": 1.0e3, "block:var2": 2.0},
-        {"block:var1": 1.0e3, "block:var2": 3.0},
-        {"block:var1": 1.0e3, "block:var2": 4.0},
-        {"block:var1": 1.0e3, "block:var2": 5.0},
-        {"block:var1": 1.0e4, "block:var2": 2.0},
-        {"block:var1": 1.0e4, "block:var2": 3.0},
-        {"block:var1": 1.0e4, "block:var2": 4.0},
-        {"block:var1": 1.0e4, "block:var2": 5.0},
+        {"block:var1": 1.0e1, "block:var2": 2.0, "block:var3": -5},
+        {"block:var1": 1.0e1, "block:var2": 2.0, "block:var3": 15},
+        {"block:var1": 1.0e1, "block:var2": 3.0, "block:var3": -5},
+        {"block:var1": 1.0e1, "block:var2": 3.0, "block:var3": 15},
+        {"block:var1": 1.0e1, "block:var2": 4.0, "block:var3": -5},
+        {"block:var1": 1.0e1, "block:var2": 4.0, "block:var3": 15},
+        {"block:var1": 1.0e1, "block:var2": 5.0, "block:var3": -5},
+        {"block:var1": 1.0e1, "block:var2": 5.0, "block:var3": 15},
+        {"block:var1": 1.0e4, "block:var2": 2.0, "block:var3": -5},
+        {"block:var1": 1.0e4, "block:var2": 2.0, "block:var3": 15},
+        {"block:var1": 1.0e4, "block:var2": 3.0, "block:var3": -5},
+        {"block:var1": 1.0e4, "block:var2": 3.0, "block:var3": 15},
+        {"block:var1": 1.0e4, "block:var2": 4.0, "block:var3": -5},
+        {"block:var1": 1.0e4, "block:var2": 4.0, "block:var3": 15},
+        {"block:var1": 1.0e4, "block:var2": 5.0, "block:var3": -5},
+        {"block:var1": 1.0e4, "block:var2": 5.0, "block:var3": 15},
     ]
 
     assert samples == expected
@@ -68,12 +68,13 @@ def test_gridscan():
 
 def test_campaign(tmp_path):
     parameters = {
-        "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True},
-        "block:var2": {"min": 2.0, "max": 5.0},
+        "block:var1": {"min": 1.0e1, "max": 1.0e4, "log": True, "n_samples": 2},
+        "block:var2": {"min": 2.0, "max": 6.0, "endpoint": False},
+        "block:var3": {"values": [-5, 15]},
     }
 
     grid_scan = epyscan.GridScan(parameters, n_samples=4)
-    template = {"block": {"var3": 1.23}, "other_block": {"var4": True}}
+    template = {"block": {"var4": 1.23}, "other_block": {"var5": True}}
     campaign = epyscan.Campaign(template, tmp_path)
 
     paths = [campaign.setup_case(sample) for sample in grid_scan]
@@ -102,8 +103,8 @@ def test_campaign(tmp_path):
     assert paths == expected_paths
 
     expected_case_deck = {
-        "block": {"var1": 1e2, "var2": 2.0, "var3": 1.23},
-        "other_block": {"var4": True},
+        "block": {"var1": 1e1, "var2": 4.0, "var3": -5, "var4": 1.23},
+        "other_block": {"var5": True},
     }
 
     with (base_path / "run_4" / "input.deck").open() as f:
