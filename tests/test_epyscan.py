@@ -1,6 +1,7 @@
 import epydeck
-import epyscan
 import numpy as np
+
+import epyscan
 
 
 def test_make_run_dirs(tmp_path):
