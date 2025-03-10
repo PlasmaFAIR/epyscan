@@ -113,7 +113,9 @@ class GridScan:
           keys are ignored and the parameter values are obtained directly
           from `parameters["block_name:parameter"]["values"]`.
           The length of `values` overrides the `n_samples` argument of the
-          `GridScan` constructor.
+          `GridScan` constructor. If an item in `parameters` has both an
+          `"n_samples"` field and a `"values"` field, the length of `values`
+          takes precedence.
 
     n_samples:
         Number of samples in each dimension. Overridden on a per-parameter
