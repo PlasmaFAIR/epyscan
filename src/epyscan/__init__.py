@@ -112,9 +112,13 @@ class GridScan:
         - `"values"`: (optional) `ArrayLike`, if included then the other
           keys are ignored and the parameter values are obtained directly
           from `parameters["block_name:parameter"]["values"]`.
+          The length of `values` overrides the `n_samples` argument of the
+          `GridScan` constructor.
 
     n_samples:
-        Number of samples in each dimension
+        Number of samples in each dimension. Overridden on a per-parameter
+        basis by the optional `"n_samples"` and `"values"` fields of items
+        within the `parameters` dict.
 
     Examples
     --------
